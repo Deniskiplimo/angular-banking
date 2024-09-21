@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataService } from '../Services/data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -9,40 +9,42 @@ import { DataService } from '../Services/data.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  // Define properties for placeholders
+  d1 = "Enter username";
+  d2 = "Enter email";
+  d3 = "Enter password";
 
-  acno: any
-  uname: any
-  psw: any
+  // Define the register form
+  registerForm1: FormGroup;
 
-  d1 = "Enter account number"
-  d2 = "enter password"
-
-  constructor(private ds: DataService, private router: Router, private fb: FormBuilder) { }
-
-  //model for register form 
-  registerForm1 = this.fb.group({
-    acno: [' ', [Validators.required, Validators.pattern('[0-9]+')]],
-    psw: [' ', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]],
-    uname: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]]
-  })
-
+  constructor(private router: Router, private fb: FormBuilder, private http: HttpClient) {
+    this.registerForm1 = this.fb.group({
+      username: ['', [Validators.required, Validators.pattern('[a-zA-Z]+')]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
   register() {
-    var acno = this.registerForm1.value.acno
-    var psw = this.registerForm1.value.psw
-    var uname = this.registerForm1.value.uname
     if (this.registerForm1.valid) {
-      this.ds.register(acno, uname, psw).subscribe((result: any) => {
-        alert(result.messsage)
-        this.router.navigateByUrl("")
-      },
-        result => {
-          alert(result.error.messsage)
+      const formData = this.registerForm1.value;
+      const requestBody = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+      };
+
+      this.http.post('/api/register', requestBody).subscribe({
+        next: (result: any) => {
+          alert(result.message);
+          this.router.navigateByUrl(""); // Redirect after successful registration
+        },
+        error: (error) => {
+          alert(error.error.message); // Show error message
         }
-      )
-    }
-    else {
-      alert("Invalid form")
+      });
+    } else {
+      alert("Invalid form");
     }
   }
 }

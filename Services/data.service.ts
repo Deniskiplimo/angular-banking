@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+ 
 //create global header for header overloading 
 const option = {
   headers: new HttpHeaders()
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 
 
@@ -71,18 +71,18 @@ export class DataService {
 
   register(acno: any, uname: any, psw: any) {
     const data = { acno, uname, psw }
-    return this.http.post('http://localhost:3000/register', data)
+    return this.http.post('http://localhost:5000/api/register', data)
   }
 
   login(acno: any, psw: any) {
     const data = { acno, psw }
-    return this.http.post('http://localhost:3000/login', data)
+    return this.http.post('http://localhost:5000/api/login', data)
   }
 
 
   deposit(acno: any, psw: any, amnt: any) {
     const data = { acno, psw, amnt }
-    return this.http.post('http://localhost:3000/deposit', data, this.getToken())
+    return this.http.post('http://localhost:5000/account/deposit', data, this.getToken())
 
   }
 
@@ -91,12 +91,12 @@ export class DataService {
 
   withdrew(acno: any, psw: any, amnt: any) {
     const data = { acno, psw, amnt }
-    return this.http.post('http://localhost:3000/withdrew', data, this.getToken())
+    return this.http.post('http://localhost:5000/account/withdrew', data, this.getToken())
   }
 
   getTransaction(acno: any) {
     const data = { acno }
-    return this.http.post('http://localhost:3000/getTransaction', data, this.getToken())
+    return this.http.post('http://localhost:5000/account/getTransaction', data, this.getToken())
   }
 
   deleteAcc(acno: any) {

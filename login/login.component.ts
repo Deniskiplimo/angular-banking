@@ -10,46 +10,41 @@ import { DataService } from '../Services/data.service';
 })
 export class LoginComponent {
 
-  data1 = "Enter your account number"
-  data2 = "Enter your password"
-  // acno:any
-  // passwd:any
+  data1 = "Enter your username or email";
+  data2 = "Enter your password";
 
-  constructor(private router: Router, private ds: DataService, private fb: FormBuilder) { }
+  constructor(
+    private router: Router, 
+    private ds: DataService, 
+    private fb: FormBuilder
+  ) { }
 
+  // Form group for login with validation
   loginForm = this.fb.group({
-    acno: ['', [Validators.required, Validators.pattern('[0-9]+')]],
-    psw: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]+')]]
+    usernameOrEmail: ['', [Validators.required, Validators.email]], // Adjust validation for email or username
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
 
-  })
-
+  // Login function
   login() {
-    var acno = this.loginForm.value.acno
-    var psw = this.loginForm.value.psw
+    const usernameOrEmail = this.loginForm.value.usernameOrEmail;
+    const password = this.loginForm.value.password;
+
     if (this.loginForm.valid) {
-      this.ds.login(acno,psw).subscribe((result:any)=>{
+      this.ds.login(usernameOrEmail, password).subscribe(
+        (result: any) => {
+          localStorage.setItem("currentUser", result.currentUser);
+          localStorage.setItem("token", JSON.stringify(result.token));
 
-        localStorage.setItem("currentUser",result.currentUser)
-        localStorage.setItem("currentAcno",JSON.stringify(result.currentAcno))
-        localStorage.setItem("token",JSON.stringify(result.token))
-
-        alert(result.messsage)
-        this.router.navigateByUrl("dashboard")
-      },
-      result=>{
-        alert(result.error.messsage)
-      }
-      )
+          alert(result.message);
+          this.router.navigateByUrl("dashboard");
+        },
+        (result) => {
+          alert(result.error.message);
+        }
+      );
+    } else {
+      alert('Invalid form');
     }
-    else {
-      alert('invalid form')
-    }
-
   }
-
-
 }
-
-// ---------------------------------------
-
-
