@@ -1,53 +1,47 @@
 <div class="container-fluid">
-
-
-
-
   <div class="row">
-
-
-    <div class=" col-lg-6 col-md-12 col-sm-12 col-12 ">
-
+    <div class="col-lg-6 col-md-12 col-sm-12 col-12">
       <app-homecard></app-homecard>
-
     </div>
 
-    <div class="container col-lg-6 col-md-12  col-sm-12">
+    <div class="container col-lg-6 col-md-12 col-sm-12">
       <input id="register_toggle" type="checkbox">
       <div class="slider">
         <form [formGroup]="loginForm" class="form">
           <span class="title text-white">LOGIN</span>
+
+          <!-- Username or Email input -->
           <div class="form_control">
-            <input formControlName="acno" name="uname" id="u1" class="input" type="text" [placeholder]="data1">
+            <input formControlName="usernameOrEmail" name="usernameOrEmail" id="u1" class="input" type="text" [placeholder]="data1">
           </div>
-          <div class="valdiv" *ngIf="this.loginForm.get('acno')?.errors && this.loginForm.get('acno')?.touched">
-            <p class=" ms-2">Invalid account number. Please enter only numbers and try again. <span>(e.g 1000)</span>
+          <div class="valdiv" *ngIf="loginForm.get('usernameOrEmail')?.errors && loginForm.get('usernameOrEmail')?.touched">
+            <p class="ms-2">
+              Invalid username or email. Please enter a valid value.
             </p>
           </div>
 
-
+          <!-- Password input -->
           <div class="form_control">
-            <input formControlName="psw" id="p1" name="passW" class="input" type="password" [placeholder]="data2">
+            <input formControlName="password" id="p1" name="password" class="input" type="password" [placeholder]="data2">
           </div>
-          <div class="valdiv" *ngIf="this.loginForm.get('psw')?.errors && this.loginForm.get('psw')?.touched">
-            <p class=" ms-2">Please enter your password. Special characters are not allowed. <span>(e.g abc123)</span>
-
+          <div class="valdiv" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
+            <p class="ms-2">
+              Please enter your password.
             </p>
           </div>
+
+          <!-- Login button -->
           <button (click)="login()" class="fs-5">Login</button>
 
-          <p class="text-white ">Dont have an account ? <a class="text-info" style="text-decoration:none ;"
-              href="register">Create account</a></p>
-
+          <!-- Register link -->
+          <p class="text-white">
+            Don't have an account? 
+            <a class="text-info" style="text-decoration:none;" [routerLink]="['/register']">
+              Create account
+            </a>
+          </p>
         </form>
-
-
       </div>
     </div>
-
-
-
-
-
   </div>
 </div>
