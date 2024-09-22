@@ -7,31 +7,41 @@
     <div class="container col-lg-6 col-md-12 col-sm-12">
       <input id="register_toggle" type="checkbox">
       <div class="slider">
-        <form [formGroup]="loginForm" class="form">
+        <form [formGroup]="loginForm" class="form" (ngSubmit)="login()">
           <span class="title text-white">LOGIN</span>
 
           <!-- Username or Email input -->
           <div class="form_control">
-            <input formControlName="usernameOrEmail" name="usernameOrEmail" id="u1" class="input" type="text" [placeholder]="data1">
-          </div>
-          <div class="valdiv" *ngIf="loginForm.get('usernameOrEmail')?.errors && loginForm.get('usernameOrEmail')?.touched">
-            <p class="ms-2">
+            <input 
+              formControlName="usernameOrEmail" 
+              name="usernameOrEmail" 
+              id="u1" 
+              class="input" 
+              type="text" 
+              [placeholder]="data1" 
+              [class.is-invalid]="loginForm.get('usernameOrEmail')?.invalid && loginForm.get('usernameOrEmail')?.touched">
+            <div class="invalid-feedback" *ngIf="loginForm.get('usernameOrEmail')?.errors && loginForm.get('usernameOrEmail')?.touched">
               Invalid username or email. Please enter a valid value.
-            </p>
+            </div>
           </div>
 
           <!-- Password input -->
           <div class="form_control">
-            <input formControlName="password" id="p1" name="password" class="input" type="password" [placeholder]="data2">
-          </div>
-          <div class="valdiv" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
-            <p class="ms-2">
+            <input 
+              formControlName="password" 
+              id="p1" 
+              name="password" 
+              class="input" 
+              type="password" 
+              [placeholder]="data2" 
+              [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <div class="invalid-feedback" *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched">
               Please enter your password.
-            </p>
+            </div>
           </div>
 
           <!-- Login button -->
-          <button (click)="login()" class="fs-5">Login</button>
+          <button type="submit" class="fs-5" [disabled]="loginForm.invalid">Login</button>
 
           <!-- Register link -->
           <p class="text-white">

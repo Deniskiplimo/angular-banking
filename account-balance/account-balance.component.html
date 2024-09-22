@@ -1,0 +1,8 @@
+<div>
+    <h2>Account Balance</h2>
+    <input [(ngModel)]="userId" placeholder="Enter User ID" />
+    <button (click)="getBalance()">Get Balance</button>
+    <div *ngIf="balance !== null">Balance: {{ balance }}</div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  </div>
+  

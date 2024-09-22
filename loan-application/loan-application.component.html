@@ -1,0 +1,29 @@
+<div>
+    <h2>Apply for a Loan</h2>
+    <form (ngSubmit)="applyForLoan()">
+      <label>User ID: </label>
+      <input [(ngModel)]="userId" name="userId" required />
+  
+      <label>Amount Requested: </label>
+      <input type="number" [(ngModel)]="amountRequested" name="amountRequested" required />
+  
+      <label>Purpose: </label>
+      <select [(ngModel)]="purpose" name="purpose" required>
+        <option value="home">Home</option>
+        <option value="auto">Auto</option>
+        <!-- Add other loan purposes -->
+      </select>
+  
+      <label>Term (months): </label>
+      <input type="number" [(ngModel)]="term" name="term" required />
+  
+      <label>Interest Rate (%): </label>
+      <input type="number" [(ngModel)]="interestRate" name="interestRate" required />
+  
+      <button type="submit">Submit Loan Application</button>
+    </form>
+  
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div *ngIf="successMessage">{{ successMessage }}</div>
+  </div>
+  

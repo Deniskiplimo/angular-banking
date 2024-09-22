@@ -1,0 +1,11 @@
+<div>
+    <h3>Reject Loan</h3>
+    <label for="reason">Reason for Rejection</label>
+    <input type="text" [(ngModel)]="reason" id="reason" />
+  
+    <label for="rejectorId">Rejector ID</label>
+    <input type="text" [(ngModel)]="rejectorId" id="rejectorId" />
+  
+    <button (click)="rejectLoan()">Reject Loan</button>
+  </div>
+  
