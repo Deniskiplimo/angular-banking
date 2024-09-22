@@ -10,102 +10,100 @@ import { DataService } from '../Services/data.service';
 })
 export class DashboardComponent implements OnInit {
 
-  acno: any
-  user: any
-  sDetails: any
-
-
+  acno: any;
+  user: any;
+  sDetails: any;
 
   constructor(private ds: DataService, private fb: FormBuilder, private router: Router) {
-
-    //access data from dataservice and store in a variable
-
-    this.user = localStorage.getItem("currentUser")
-
-    this.sDetails = new Date()
-
+    // Access data from local storage
+    this.user = localStorage.getItem("currentUser");
+    this.sDetails = new Date();
   }
 
   ngOnInit(): void {
     if (!localStorage.getItem("currentAcno")) {
-      alert("please login")
-      this.router.navigateByUrl("")
+      alert("Please login");
+      this.router.navigateByUrl("");
     }
   }
 
   depositForm = this.fb.group({
     acno: ['', [Validators.required, Validators.pattern('[0-9]+')]],
     psw: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]+')]],
-    amnt: ['', [Validators.required, Validators.pattern('[0-9]+')]]
-  })
+    amnt: ['', [Validators.required, Validators.pattern('[0-9]+')]],
+    isMpesa: [false] // isMpesa boolean control
+  });
+
   withdrawForm = this.fb.group({
     acno1: ['', [Validators.required, Validators.pattern('[0-9]+')]],
     psw1: ['', [Validators.required, Validators.pattern('[0-9a-zA-Z]+')]],
     amnt1: ['', [Validators.required, Validators.pattern('[0-9]+')]]
-  })
+  });
 
   deposit() {
-    var acno = this.depositForm.value.acno
-    var psw = this.depositForm.value.psw
-    var amnt = this.depositForm.value.amnt
+    var acno = this.depositForm.value.acno!;
+    var psw = this.depositForm.value.psw!;
+    var amnt = this.depositForm.value.amnt!;
+    var isMpesa = this.depositForm.value.isMpesa ?? false; // Ensure isMpesa is always a boolean
+
     if (this.depositForm.valid) {
-      this.ds.deposit(acno, psw, amnt).subscribe((result: any) => {
-        alert(result.messsage)
-      },
-        result => {
-          alert(result.error.messsage)
+      this.ds.deposit(acno, Number(amnt), psw, isMpesa).subscribe(
+        (result: any) => {
+          alert(result.message);
+          this.clearForm();
+        },
+        error => {
+          alert(error.error.message);
         }
-      )
-
+      );
+    } else {
+      alert('Invalid form');
     }
-    else {
-      alert('Invalid form')
-    }
-
   }
 
-  withdrew() {
-    var acno = this.withdrawForm.value.acno1
-    var psw = this.withdrawForm.value.psw1
-    var amnt = this.withdrawForm.value.amnt1
+  withdraw() {
+    var acno = this.withdrawForm.value.acno1!;
+    var psw = this.withdrawForm.value.psw1!;
+    var amnt = this.withdrawForm.value.amnt1!;
+
     if (this.withdrawForm.valid) {
-      this.ds.withdrew(acno, psw, amnt).subscribe((result: any) => {
-        alert(result.messsage)
-      },
-        result => {
-          alert(result.error.messsage)
+      this.ds.withdraw(acno, Number(amnt), psw).subscribe(
+        (result: any) => {
+          alert(result.message);
+          this.clearForm();
+        },
+        error => {
+          alert(error.error.message);
         }
-      )
-
+      );
+    } else {
+      alert('Invalid form');
     }
-    else {
-      alert('Invalid form')
-    }
+  }
 
+  clearForm() {
+    this.depositForm.reset();
+    this.withdrawForm.reset();
   }
 
   logout() {
-    localStorage.removeItem("currentUser")
-    localStorage.removeItem("currentAcno")
-    this.router.navigateByUrl("")
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("currentAcno");
+    this.router.navigateByUrl("");
   }
+
   deleteAcc() {
-    this.acno = JSON.parse(localStorage.getItem("currentAcno") || "")
+    this.acno = JSON.parse(localStorage.getItem("currentAcno") || "");
   }
 
   cancelChild() {
-    this.acno = ""
+    this.acno = "";
   }
 
-  ondeleteAcc(event: any) {
+  onDeleteAcc(event: any) {
     this.ds.deleteAcc(event).subscribe((result: any) => {
-      alert(result.messsage)
-      // this.router.navigateByUrl("")
-      this.logout()
-    })
+      alert(result.message);
+      this.logout();
+    });
   }
-
 }
-
-
-

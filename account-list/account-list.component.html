@@ -1,0 +1,14 @@
+<div>
+    <h2>Account List</h2>
+    <select [(ngModel)]="filter" (change)="onFilterChange(filter)">
+      <option value="all">All Accounts</option>
+      <option value="active">Active Accounts</option>
+    </select>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <ul>
+      <li *ngFor="let account of accounts">
+        {{ account.accountNumber }} - {{ account.balance }}
+      </li>
+    </ul>
+  </div>
+  

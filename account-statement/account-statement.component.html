@@ -1,0 +1,17 @@
+<div>
+    <h2>Account Statement</h2>
+    <input [(ngModel)]="accountNumber" placeholder="Account Number" />
+    <input [(ngModel)]="startDate" placeholder="Start Date (YYYY-MM-DD)" />
+    <input [(ngModel)]="endDate" placeholder="End Date (YYYY-MM-DD)" />
+    <select [(ngModel)]="format">
+      <option value="pdf">PDF</option>
+      <option value="csv">CSV</option>
+      <option value="json">JSON</option>
+    </select>
+    <button (click)="fetchStatement()">Fetch Statement</button>
+    <div *ngIf="statement">
+      <h3>Statement Data:</h3>
+      <pre>{{ statement | json }}</pre>
+    </div>
+  </div>
+  

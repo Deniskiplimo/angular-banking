@@ -1,0 +1,11 @@
+<div>
+    <h2>Account Details</h2>
+    <input [(ngModel)]="accountNumber" placeholder="Enter Account Number" />
+    <button (click)="getAccountDetails()">Get Details</button>
+    <div *ngIf="accountDetails">
+      <p>Account Number: {{ accountDetails.accountNumber }}</p>
+      <p>Balance: {{ accountDetails.balance }}</p>
+    </div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  </div>
+  

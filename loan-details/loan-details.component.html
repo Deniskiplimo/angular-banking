@@ -1,0 +1,19 @@
+<div>
+    <h2>Loan Details</h2>
+    
+    <input [(ngModel)]="loanId" placeholder="Enter Loan ID" />
+    <button (click)="getLoanDetails()">Get Details</button>
+  
+    <div *ngIf="loanDetails">
+      <h3>Loan Information</h3>
+      <p>Loan ID: {{ loanDetails._id }}</p>
+      <p>Amount Requested: {{ loanDetails.amountRequested | currency }}</p>
+      <p>Approved Amount: {{ loanDetails.approvedAmount | currency }}</p>
+      <p>Status: {{ loanDetails.status }}</p>
+      <p>Purpose: {{ loanDetails.purpose }}</p>
+      <!-- Display other loan details -->
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+  </div>
+  

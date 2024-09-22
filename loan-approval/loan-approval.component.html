@@ -1,0 +1,11 @@
+<div>
+    <h2>Approve Loan</h2>
+    <input [(ngModel)]="loanId" placeholder="Enter Loan ID" />
+    <input [(ngModel)]="approvedAmount" placeholder="Enter Approved Amount" type="number" />
+    <input [(ngModel)]="approverId" placeholder="Enter Approver ID" />
+    <button (click)="approveLoan()">Approve Loan</button>
+  
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div *ngIf="successMessage">{{ successMessage }}</div>
+  </div>
+  

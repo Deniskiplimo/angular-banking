@@ -1,0 +1,14 @@
+<div class="two-factor-auth-container">
+    <h3>Create 2FA Application</h3>
+    <form [formGroup]="twoFaForm" (ngSubmit)="createApplication()">
+      <div class="form-group">
+        <label for="name">Application Name</label>
+        <input type="text" formControlName="name" id="name" class="form-control" required />
+      </div>
+      <button type="submit" [disabled]="isLoading" class="btn btn-primary">Create Application</button>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+      <div *ngIf="isLoading" class="loading-spinner">Loading...</div>
+    </form>
+  </div>
+  

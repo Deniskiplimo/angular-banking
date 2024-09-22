@@ -1,0 +1,25 @@
+<div>
+    <h2>Booking Management</h2>
+    <select [(ngModel)]="bookingType">
+      <option value="room">Room</option>
+      <option value="uber">Uber</option>
+      <option value="meal">Meal</option>
+    </select>
+    <div *ngIf="bookingType === 'room'">
+      <!-- Add fields for room booking -->
+      <input [(ngModel)]="bookingData.guestName" placeholder="Guest Name" />
+      <input [(ngModel)]="bookingData.roomType" placeholder="Room Type" />
+      <input [(ngModel)]="bookingData.checkInDate" placeholder="Check-In Date" />
+      <input [(ngModel)]="bookingData.checkOutDate" placeholder="Check-Out Date" />
+    </div>
+    <!-- Similar sections for Uber and Meal booking -->
+    <button (click)="createBooking()">Create Booking</button>
+    
+    <button (click)="fetchBookings()">Fetch All Bookings</button>
+    <ul *ngIf="bookings">
+      <li *ngFor="let booking of bookings">
+        {{ booking.bookingType }} - {{ booking.status }}
+      </li>
+    </ul>
+  </div>
+  

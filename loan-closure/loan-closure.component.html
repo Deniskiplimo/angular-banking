@@ -1,0 +1,35 @@
+<div class="loan-closure-container">
+    <h3>Close Loan</h3>
+  
+    <form []="loanClosureForm" (ngSubmit)="closeLoan()" class="loan-closure-form">
+      <div class="form-group">
+        <label for="closedBy">Closed By</label>
+        <input 
+          type="text" 
+          formControlName="closedBy" 
+          id="closedBy" 
+          class="form-control" 
+        />
+  
+        <div *ngIf="loanClosureForm.get('closedBy')?.invalid && (loanClosureForm.get('closedBy')?.dirty || loanClosureForm.get('closedBy')?.touched)" class="error-message">
+          Closed By is required.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="isLoading || loanClosureForm.invalid" class="btn btn-primary">
+        Close Loan
+      </button>
+  
+      <div *ngIf="isLoading" class="loading-spinner">
+        Loading...
+      </div>
+  
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+    </form>
+  </div>
+  
